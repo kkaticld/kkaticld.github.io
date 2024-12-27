@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ智能回答机器人</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .chat-box {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            background-color: white;
+        }
+        .input-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input[type="text"], textarea {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) {
+            background-color: #45a049;
+        }
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        .user-message {
+            background-color: #e3f2fd;
+            margin-left: 20%;
+        }
+        .bot-message {
+            background-color: #f5f5f5;
+            margin-right: 20%;
+        }
+        nav {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            background-color: white;
+            border-radius: 8px 8px 0 0;
+        }
+        .nav-tabs {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .nav-tabs li {
+            margin: 0;
+        }
+        .nav-tabs button {
+            padding: 15px 30px;
+            border: none;
+            background: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 16px;
+            border-bottom: 2px solid transparent;
+            border-radius: 0;
+        }
+        .nav-tabs button:hover:not(.active) {
+            background-color: #f8f9fa;
+            color: #4CAF50;
+        }
+        .nav-tabs button.active {
+            color: #4CAF50;
+            border-bottom: 2px solid #4CAF50;
+            background-color: transparent;
+        }
+        .tab-content {
+            display: none;
+            background-color: white;
+            border-radius: 0 0 8px 8px;
+            padding: 20px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .qa-list {
+            margin-top: 20px;
+        }
+        .qa-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            background-color: #fff;
+            position: relative;
+        }
+        .qa-item button {
+            margin-left: 10px;
+            padding: 5px 10px;
+            background-color: #dc3545;
+        }
+        .qa-item button:hover {
+            background-color: #c82333;
+        }
+        .import-export {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .import-export button {
+            margin-right: 10px;
+        }
+        h1, h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+        .loading {
+            position: relative;
+            pointer-events: none;
+        }
+        .loading::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 50%;
+            left: 50%;
+            margin-top: -8px;
+            margin-left: -8px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            display: none;
+            z-index: 1000;
+        }
+        .toast.success {
+            background-color: #4CAF50;
+        }
+        .toast.error {
+            background-color: #dc3545;
+        }
+        .qa-count {
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div id="toast" class="toast"></div>
+    <nav>
+        <ul class="nav-tabs">
+            <li><button class="active" onclick="switchTab('chat')">问答对话</button></li>
+            <li><button onclick="switchTab('manage')">数据管理</button></li>
+        </ul>
+    </nav>
+
+    <div id="chat" class="tab-content active">
+        <div class="container">
+            <h1>FAQ智能回答机器人</h1>
+            <div class="chat-box" id="chatBox"></div>
+            <div class="input-container">
+                <input type="text" id="userInput" placeholder="请输入您的问题..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()" id="sendButton">发送</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="manage" class="tab-content">
+        <div class="container">
+            <h2>添加新问答</h2>
+            <div class="form-group">
+                <label for="newQuestion">问题：</label>
+                <input type="text" id="newQuestion" placeholder="输入问题">
+            </div>
+            <div class="form-group">
+                <label for="newAnswer">答案：</label>
+                <textarea id="newAnswer" placeholder="输入答案"></textarea>
+            </div>
+            <button onclick="addQA()" id="addButton">添加问答</button>
+
+            <h2>现有问答列表</h2>
+            <div class="qa-count" id="qaCount"></div>
+            <div id="qaList" class="qa-list"></div>
+
+            <div class="import-export">
+                <h2>数据导入/导出</h2>
+                <button onclick="exportData()" id="exportButton">导出数据</button>
+                <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+                <button onclick="document.getElementById('importFile').click()" id="importButton">导入数据</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 从localStorage加载数据或使用默认数据
+        let faqDatabase = JSON.parse(localStorage.getItem('faqData')) || [
+            {
+                question: "如何添加SDK对接问题案例",
+                answer: "您可以通过以下步骤添加SDK对接问题案例：\n1. 进入问题管理界面\n2. 点击'添加新问题'\n3. 填写问题描述和解决方案\n4. 选择相关标签\n5. 保存即可"
+            },
+            {
+                question: "为什么加载bidding banner的时候报EXCEPTION_BANNER_UNIT_SIZE_EMPTY",
+                answer: "这个错误通常是因为BannerBidRequestParam参数设置不正确。您需要检查参数配置，确保正确设置了banner的尺寸参数。"
+            },
+            {
+                question: "请问广告是否支持四要素",
+                answer: "是的，我们支持四要素。国内版本完全支持四要素展示要求。"
+            }
+        ];
+
+        // 显示提示消息
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type}`;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        // 设置按钮加载状态
+        function setButtonLoading(buttonId, loading) {
+            const button = document.getElementById(buttonId);
+            if (loading) {
+                button.classList.add('loading');
+                button.disabled = true;
+            } else {
+                button.classList.remove('loading');
+                button.disabled = false;
+            }
+        }
+
+        // 保存数据到localStorage
+        function saveData() {
+            try {
+                localStorage.setItem('faqData', JSON.stringify(faqDatabase));
+                return true;
+            } catch (error) {
+                console.error('保存数据失败:', error);
+                showToast('保存数据失败', 'error');
+                return false;
+            }
+        }
+
+        // 计算两个字符串的余弦相似度
+        function cosineSimilarity(str1, str2) {
+            try {
+                const words1 = str1.toLowerCase().split('');
+                const words2 = str2.toLowerCase().split('');
+                const uniqueWords = [...new Set([...words1, ...words2])];
+                
+                const vector1 = uniqueWords.map(word => words1.filter(w => w === word).length);
+                const vector2 = uniqueWords.map(word => words2.filter(w => w === word).length);
+                
+                let dotProduct = 0;
+                let magnitude1 = 0;
+                let magnitude2 = 0;
+                
+                for(let i = 0; i < vector1.length; i++) {
+                    dotProduct += vector1[i] * vector2[i];
+                    magnitude1 += vector1[i] * vector1[i];
+                    magnitude2 += vector2[i] * vector2[i];
+                }
+                
+                magnitude1 = Math.sqrt(magnitude1);
+                magnitude2 = Math.sqrt(magnitude2);
+                
+                if(magnitude1 === 0 || magnitude2 === 0) return 0;
+                
+                return dotProduct / (magnitude1 * magnitude2);
+            } catch (error) {
+                console.error('计算相似度失败:', error);
+                return 0;
+            }
+        }
+
+        // 查找最佳匹配的答案
+        function findBestMatch(question) {
+            try {
+                let bestMatch = null;
+                let highestSimilarity = 0;
+                
+                for(const qa of faqDatabase) {
+                    const similarity = cosineSimilarity(question, qa.question);
+                    if(similarity > highestSimilarity) {
+                        highestSimilarity = similarity;
+                        bestMatch = qa;
+                    }
+                }
+                
+                return highestSimilarity > 0.3 ? bestMatch.answer : "抱歉，我没有找到相关的答案。请尝试换个方式提问，或联系技术支持。";
+            } catch (error) {
+                console.error('查找匹配失败:', error);
+                return "抱歉，处理您的问题时出现错误。请稍后重试。";
+            }
+        }
+
+        // 添加消息到聊天框
+        function addMessage(message, isUser) {
+            const chatBox = document.getElementById('chatBox');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            messageDiv.textContent = message;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // 发送消息
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const question = input.value.trim();
+            
+            if(question === '') return;
+            
+            setButtonLoading('sendButton', true);
+            addMessage(question, true);
+            input.value = '';
+            
+            try {
+                const answer = findBestMatch(question);
+                setTimeout(() => {
+                    addMessage(answer, false);
+                    setButtonLoading('sendButton', false);
+                }, 500);
+            } catch (error) {
+                console.error('发送消息失败:', error);
+                showToast('发送消息失败', 'error');
+                setButtonLoading('sendButton', false);
+            }
+        }
+
+        // 处理回车键
+        function handleKeyPress(event) {
+            if(event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // 切换标签页
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-tabs button').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`.nav-tabs button[onclick*="${tabId}"]`).classList.add('active');
+        }
+
+        // 添加新的问答对
+        async function addQA() {
+            const question = document.getElementById('newQuestion').value.trim();
+            const answer = document.getElementById('newAnswer').value.trim();
+            
+            if(question === '' || answer === '') {
+                showToast('问题和答案不能为空！', 'error');
+                return;
+            }
+            
+            setButtonLoading('addButton', true);
+            
+            try {
+                faqDatabase.push({ question, answer });
+                if(saveData()) {
+                    document.getElementById('newQuestion').value = '';
+                    document.getElementById('newAnswer').value = '';
+                    updateQAList();
+                    showToast('添加成功！');
+                }
+            } catch (error) {
+                console.error('添加问答失败:', error);
+                showToast('添加失败', 'error');
+            } finally {
+                setButtonLoading('addButton', false);
+            }
+        }
+
+        // 删除问答对
+        async function deleteQA(index) {
+            if(confirm('确定要删除这个问答对吗？')) {
+                try {
+                    faqDatabase.splice(index, 1);
+                    if(saveData()) {
+                        updateQAList();
+                        showToast('删除成功！');
+                    }
+                } catch (error) {
+                    console.error('删除失败:', error);
+                    showToast('删除失败', 'error');
+                }
+            }
+        }
+
+        // 更新问答列表显示
+        function updateQAList() {
+            const qaList = document.getElementById('qaList');
+            const qaCount = document.getElementById('qaCount');
+            qaList.innerHTML = '';
+            qaCount.textContent = `共有 ${faqDatabase.length} 个问答对`;
+            
+            faqDatabase.forEach((qa, index) => {
+                const qaItem = document.createElement('div');
+                qaItem.className = 'qa-item';
+                qaItem.innerHTML = `
+                    <strong>问：</strong>${qa.question}<br>
+                    <strong>答：</strong>${qa.answer}
+                    <button onclick="deleteQA(${index})">删除</button>
+                `;
+                qaList.appendChild(qaItem);
+            });
+        }
+
+        // 导出数据
+        async function exportData() {
+            setButtonLoading('exportButton', true);
+            try {
+                const dataStr = JSON.stringify(faqDatabase, null, 2);
+                const blob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'faq_data.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showToast('导出成功！');
+            } catch (error) {
+                console.error('导出失败:', error);
+                showToast('导出失败', 'error');
+            } finally {
+                setButtonLoading('exportButton', false);
+            }
+        }
+
+        // 导入数据
+        async function importData(event) {
+            setButtonLoading('importButton', true);
+            const file = event.target.files[0];
+            if(!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if(Array.isArray(data)) {
+                        faqDatabase = data;
+                        if(saveData()) {
+                            updateQAList();
+                            showToast('数据导入成功！');
+                        }
+                    } else {
+                        showToast('无效的数据格式！', 'error');
+                    }
+                } catch (error) {
+                    console.error('导入失败:', error);
+                    showToast('导入失败：' + error.message, 'error');
+                } finally {
+                    setButtonLoading('importButton', false);
+                    event.target.value = ''; // 清除文件选择
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // 初始化显示
+        updateQAList();
+    </script>
+</body>
+</html>
