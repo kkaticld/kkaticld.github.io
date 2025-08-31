@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="iOS应用技术支持页面，提供应用帮助、常见问题解答和联系方式">
-    <meta name="keywords" content="iOS应用, 技术支持, 帮助中心, 联系我们">
+    <meta name="description" content="deviceid2 - 即时获取当前设备ID的iOS应用，完全离线使用，保护用户隐私">
+    <meta name="keywords" content="deviceid2, iOS应用, 设备ID, 离线应用, 隐私保护">
     <meta name="author" content="开发者">
     
     <!-- Open Graph 标签 -->
-    <meta property="og:title" content="iOS应用技术支持">
-    <meta property="og:description" content="获取iOS应用的技术支持和帮助">
+    <meta property="og:title" content="deviceid2 - 设备ID获取应用">
+    <meta property="og:description" content="即时获取当前设备ID，完全离线使用，保护用户隐私">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://kkaticld.github.io">
     
@@ -17,7 +17,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     
-    <title>iOS应用技术支持</title>
+    <title>deviceid2 - 设备ID获取应用</title>
     
     <style>
         /* CSS变量定义 */
@@ -396,18 +396,9 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <div class="logo-icon">A</div>
-                    <div class="logo-text">我的iOS应用</div>
+                    <div class="logo-icon">D</div>
+                    <div class="logo-text">deviceid2</div>
                 </div>
-                <nav>
-                    <ul>
-                        <li><a href="#app-info">应用介绍</a></li>
-                        <li><a href="#support">技术支持</a></li>
-                        <li><a href="#faq">常见问题</a></li>
-                        <li><a href="#privacy">隐私政策</a></li>
-                        <li><a href="#contact">联系我们</a></li>
-                    </ul>
-                </nav>
             </div>
         </div>
     </header>
@@ -417,233 +408,17 @@
         <!-- 应用信息区域 -->
         <section id="app-info" class="app-info">
             <div class="container">
-                <div class="app-icon">A</div>
-                <h1 class="app-title">我的iOS应用</h1>
+                <div class="app-icon">D</div>
+                <h1 class="app-title">deviceid2</h1>
                 <p class="app-description">
-                    这是一款专为iOS设备设计的优秀应用，为用户提供便捷、高效的服务体验。
-                    我们致力于为用户创造价值，让您的移动生活更加精彩。
+                    这是一个帮你即时获取当前设备ID的应用，应用不依赖网络，不会上传任何隐私信息，完全离线使用，保护用户隐私。
                 </p>
                 <div style="margin-top: var(--space-lg);">
-                    <a href="#" class="btn">App Store下载</a>
-                    <a href="#support" class="btn btn-secondary">获取支持</a>
+                    <a href="#" class="btn">App Store 下载（即将发布）</a>
                 </div>
             </div>
         </section>
 
-        <!-- 技术支持区域 -->
-        <section id="support">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">技术支持</h2>
-                    <p class="section-subtitle">我们为您提供全面的技术支持服务，确保您获得最佳的应用体验</p>
-                </div>
-                
-                <div class="card-grid">
-                    <div class="card">
-                        <h3>📧 邮件支持</h3>
-                        <p>遇到问题？发送邮件给我们，我们会在24小时内回复。</p>
-                        <a href="mailto:support@example.com" class="btn" style="margin-top: var(--space-sm);">
-                            发送邮件
-                        </a>
-                    </div>
-                    
-                    <div class="card">
-                        <h3>📱 应用内反馈</h3>
-                        <p>在应用的设置页面中，您可以直接提交反馈和建议。</p>
-                        <p style="margin-top: var(--space-sm);">设置 → 帮助与反馈 → 提交反馈</p>
-                    </div>
-                    
-                    <div class="card">
-                        <h3>🔄 应用更新</h3>
-                        <p>确保您使用的是最新版本的应用，以获得最佳体验。</p>
-                        <p style="margin-top: var(--space-sm);">App Store会自动通知您更新。</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 常见问题 -->
-        <section id="faq">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">常见问题</h2>
-                    <p class="section-subtitle">查找常见问题的快速解答</p>
-                </div>
-                
-                <div class="card">
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span>应用无法正常启动怎么办？</span>
-                            <span>+</span>
-                        </div>
-                        <div class="faq-answer">
-                            <p>请尝试以下步骤：</p>
-                            <ul style="margin-left: var(--space-md); margin-top: var(--space-xs);">
-                                <li>完全关闭应用后重新启动</li>
-                                <li>重启您的设备</li>
-                                <li>检查是否有应用更新</li>
-                                <li>如果问题持续，请联系我们的技术支持</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span>如何恢复我的数据？</span>
-                            <span>+</span>
-                        </div>
-                        <div class="faq-answer">
-                            <p>您的数据可能已经自动备份到iCloud。请确保：</p>
-                            <ul style="margin-left: var(--space-md); margin-top: var(--space-xs);">
-                                <li>iCloud同步已开启</li>
-                                <li>使用相同的Apple ID登录</li>
-                                <li>网络连接正常</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span>应用支持哪些iOS版本？</span>
-                            <span>+</span>
-                        </div>
-                        <div class="faq-answer">
-                            <p>我们的应用支持iOS 12.0及以上版本。为了获得最佳体验，建议使用最新的iOS版本。</p>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(this)">
-                            <span>如何删除我的账户和数据？</span>
-                            <span>+</span>
-                        </div>
-                        <div class="faq-answer">
-                            <p>您可以通过以下方式删除账户：</p>
-                            <ul style="margin-left: var(--space-md); margin-top: var(--space-xs);">
-                                <li>在应用内的设置中选择"删除账户"</li>
-                                <li>或发送邮件至 support@example.com 申请删除</li>
-                            </ul>
-                            <p style="margin-top: var(--space-xs);"><strong>注意：此操作不可撤销</strong></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 隐私政策 -->
-        <section id="privacy">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">隐私政策</h2>
-                    <p class="section-subtitle">我们重视并保护您的隐私</p>
-                </div>
-                
-                <div class="card">
-                    <h3>信息收集</h3>
-                    <p style="margin-bottom: var(--space-sm);">
-                        我们仅收集必要的信息以提供更好的服务体验：
-                    </p>
-                    <ul style="margin-left: var(--space-md);">
-                        <li>设备信息（iOS版本、设备型号）</li>
-                        <li>应用使用统计（仅用于改进应用性能）</li>
-                        <li>您主动提供的信息（如反馈内容）</li>
-                    </ul>
-                    
-                    <h3 style="margin-top: var(--space-lg);">信息使用</h3>
-                    <p style="margin-bottom: var(--space-sm);">
-                        我们使用收集的信息用于：
-                    </p>
-                    <ul style="margin-left: var(--space-md);">
-                        <li>提供和改进我们的服务</li>
-                        <li>解决技术问题</li>
-                        <li>发送重要的应用更新通知</li>
-                    </ul>
-                    
-                    <h3 style="margin-top: var(--space-lg);">信息保护</h3>
-                    <p>
-                        我们采用业界标准的安全措施保护您的信息，不会将您的个人信息出售、交易或转让给第三方。
-                    </p>
-                    
-                    <p style="margin-top: var(--space-lg); font-size: var(--font-size-sm); color: var(--text-secondary);">
-                        最后更新：2024年8月31日
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 使用条款 -->
-        <section id="terms">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">使用条款</h2>
-                    <p class="section-subtitle">使用我们的应用即表示您同意以下条款</p>
-                </div>
-                
-                <div class="card">
-                    <h3>服务条款</h3>
-                    <p style="margin-bottom: var(--space-sm);">
-                        通过下载、安装或使用本应用，您同意遵守以下条款：
-                    </p>
-                    <ul style="margin-left: var(--space-md);">
-                        <li>您必须年满13岁才能使用本应用</li>
-                        <li>不得将应用用于非法或未经授权的目的</li>
-                        <li>不得干扰或破坏应用的安全功能</li>
-                        <li>不得逆向工程、反编译或反汇编应用</li>
-                    </ul>
-                    
-                    <h3 style="margin-top: var(--space-lg);">知识产权</h3>
-                    <p>
-                        本应用及其内容受知识产权法保护。所有权利归开发者所有。
-                    </p>
-                    
-                    <h3 style="margin-top: var(--space-lg);">免责声明</h3>
-                    <p>
-                        本应用按"现状"提供，不提供任何明示或暗示的保证。开发者不对因使用应用而产生的任何损失承担责任。
-                    </p>
-                    
-                    <p style="margin-top: var(--space-lg); font-size: var(--font-size-sm); color: var(--text-secondary);">
-                        最后更新：2024年8月31日
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 联系我们 -->
-        <section id="contact">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">联系我们</h2>
-                    <p class="section-subtitle">有问题或建议？我们很乐意听取您的反馈</p>
-                </div>
-                
-                <div class="contact-form">
-                    <form action="#" method="post" onsubmit="handleSubmit(event)">
-                        <div class="form-group">
-                            <label for="name" class="form-label">姓名 *</label>
-                            <input type="text" id="name" name="name" class="form-input" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email" class="form-label">邮箱 *</label>
-                            <input type="email" id="email" name="email" class="form-input" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="subject" class="form-label">主题 *</label>
-                            <input type="text" id="subject" name="subject" class="form-input" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message" class="form-label">消息 *</label>
-                            <textarea id="message" name="message" class="form-input" required 
-                                placeholder="请描述您的问题或建议..."></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn" style="width: 100%;">发送消息</button>
-                    </form>
-                </div>
-            </div>
-        </section>
     </main>
 
     <!-- Footer -->
@@ -651,27 +426,13 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>关于我们</h3>
-                    <p>我们是一支专注于创建高质量iOS应用的团队，致力于为用户提供卓越的移动体验。</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>快速链接</h3>
-                    <p><a href="#app-info">应用介绍</a></p>
-                    <p><a href="#support">技术支持</a></p>
-                    <p><a href="#faq">常见问题</a></p>
-                    <p><a href="#privacy">隐私政策</a></p>
-                </div>
-                
-                <div class="footer-section">
                     <h3>联系信息</h3>
-                    <p>邮箱：support@example.com</p>
-                    <p>技术支持时间：周一至周五 9:00-18:00</p>
+                    <p>邮箱：klovelovely@icloud.com</p>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2024 我的iOS应用. 保留所有权利.</p>
+                <p>&copy; 2024 deviceid2. 保留所有权利.</p>
             </div>
         </div>
     </footer>
@@ -752,12 +513,12 @@
         const structuredData = {
             "@context": "https://schema.org",
             "@type": "SupportPage",
-            "name": "我的iOS应用技术支持",
-            "description": "iOS应用的技术支持页面，提供帮助、FAQ和联系方式",
+            "name": "deviceid2 - 设备ID获取应用",
+            "description": "即时获取当前设备ID，完全离线使用，保护用户隐私",
             "url": window.location.href,
             "provider": {
                 "@type": "Organization",
-                "name": "我的iOS应用开发团队"
+                "name": "deviceid2 开发团队"
             }
         };
         
