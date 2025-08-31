@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="iOS应用技术支持页面，提供应用帮助、常见问题解答和联系方式">
+    <meta name="keywords" content="iOS应用, 技术支持, 帮助中心, 联系我们">
+    <meta name="author" content="开发者">
+    
+    <!-- Open Graph 标签 -->
+    <meta property="og:title" content="iOS应用技术支持">
+    <meta property="og:description" content="获取iOS应用的技术支持和帮助">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kkaticld.github.io">
+    
+    <!-- iOS特定的meta标签 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
+    <title>iOS应用技术支持</title>
+    
+    <style>
+        /* CSS变量定义 */
+        :root {
+            --primary-color: #007AFF;
+            --secondary-color: #34C759;
+            --error-color: #FF3B30;
+            --warning-color: #FF9500;
+            --background-color: #F2F2F7;
+            --card-background: #FFFFFF;
+            --text-primary: #1C1C1E;
+            --text-secondary: #8E8E93;
+            --border-color: #E5E5EA;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            
+            --space-xs: 8px;
+            --space-sm: 16px;
+            --space-md: 24px;
+            --space-lg: 32px;
+            --space-xl: 48px;
+            --space-xxl: 64px;
+            
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 24px;
+            --font-size-xxl: 32px;
+        }
+        
+        /* 重置和基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--background-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-sm);
+        }
+        
+        /* Header样式 */
+        header {
+            background: var(--card-background);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-sm) 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: var(--font-size-lg);
+        }
+        
+        .logo-text {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: var(--space-md);
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: var(--primary-color);
+        }
+        
+        /* 主要内容区域 */
+        main {
+            padding: var(--space-xl) 0;
+        }
+        
+        section {
+            margin-bottom: var(--space-xxl);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+        }
+        
+        .section-title {
+            font-size: var(--font-size-xxl);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .section-subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* 卡片样式 */
+        .card {
+            background: var(--card-background);
+            border-radius: 12px;
+            padding: var(--space-lg);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+        }
+        
+        /* 应用信息区域 */
+        .app-info {
+            text-align: center;
+            padding: var(--space-xxl) 0;
+        }
+        
+        .app-icon {
+            width: 120px;
+            height: 120px;
+            background: var(--primary-color);
+            border-radius: 24px;
+            margin: 0 auto var(--space-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: var(--font-size-xxl);
+            font-weight: bold;
+            box-shadow: var(--shadow);
+        }
+        
+        .app-title {
+            font-size: var(--font-size-xxl);
+            font-weight: 700;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .app-description {
+            font-size: var(--font-size-lg);
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto var(--space-lg);
+        }
+        
+        /* 按钮样式 */
+        .btn {
+            display: inline-block;
+            padding: var(--space-sm) var(--space-lg);
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: var(--font-size-base);
+        }
+        
+        .btn:hover {
+            background: #0051D0;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: var(--background-color);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--border-color);
+        }
+        
+        /* FAQ样式 */
+        .faq-item {
+            margin-bottom: var(--space-md);
+        }
+        
+        .faq-question {
+            background: var(--background-color);
+            padding: var(--space-sm);
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .faq-answer {
+            padding: var(--space-sm);
+            color: var(--text-secondary);
+            display: none;
+        }
+        
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+        
+        /* 联系表单 */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: var(--space-md);
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: var(--space-xs);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: var(--space-sm);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: var(--font-size-base);
+            font-family: var(--font-family);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        textarea.form-input {
+            height: 120px;
+            resize: vertical;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--text-primary);
+            color: white;
+            padding: var(--space-xl) 0;
+            margin-top: var(--space-xxl);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .footer-section h3 {
+            margin-bottom: var(--space-sm);
+            color: white;
+        }
+        
+        .footer-section p,
+        .footer-section a {
+            color: #B0B0B0;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: var(--space-lg);
+            text-align: center;
+            color: #B0B0B0;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: var(--space-sm);
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .section-title {
+                font-size: var(--font-size-xl);
+            }
+            
+            .app-icon {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .container {
+                padding: 0 var(--space-sm);
+            }
+        }
+        
+        /* 辅助功能 */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* 动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">A</div>
+                    <div class="logo-text">我的iOS应用</div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#app-info">应用介绍</a></li>
+                        <li><a href="#support">技术支持</a></li>
+                        <li><a href="#faq">常见问题</a></li>
+                        <li><a href="#privacy">隐私政策</a></li>
+                        <li><a href="#contact">联系我们</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- 应用信息区域 -->
+        <section id="app-info" class="app-info">
+            <div class="container">
+                <div class="app-icon">A</div>
+                <h1 class="app-title">我的iOS应用</h1>
+                <p class="app-description">
+                    这是一款专为iOS设备设计的优秀应用，为用户提供便捷、高效的服务体验。
+                    我们致力于为用户创造价值，让您的移动生活更加精彩。
+                </p>
+                <div style="margin-top: var(--space-lg);">
+                    <a href="#" class="btn">App Store下载</a>
+                    <a href="#support" class="btn btn-secondary">获取支持</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 技术支持区域 -->
+        <section id="support">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">技术支持</h2>
+                    <p class="section-subtitle">我们为您提供全面的技术支持服务，确保您获得最佳的应用体验</p>
+                </div>
+                
+                <div class="card-grid">
+                    <div class="card">
+                        <h3>📧 邮件支持</h3>
+                        <p>遇到问题？发送邮件给我们，我们会在24小时内回复。</p>
+                        <a href="mailto:support@example.com" class="btn" style="margin-top: var(--space-sm);">
+                            发送邮件
+                        </a>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>📱 应用内反馈</h3>
+                        <p>在应用的设置页面中，您可以直接提交反馈和建议。</p>
+                        <p style="margin-top: var(--space-sm);">设置 → 帮助与反馈 → 提交反馈</p>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>🔄 应用更新</h3>
+                        <p>确保您使用的是最新版本的应用，以获得最佳体验。</p>
+                        <p style="margin-top: var(--space-sm);">App Store会自动通知您更新。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 常见问题 -->
+        <section id="faq">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">常见问题</h2>
+                    <p class="section-subtitle">查找常见问题的快速解答</p>
+                </div>
+                
+                <div class="card">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>应用无法正常启动怎么办？</span>
+                            <span>+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>请尝试以下步骤：</p>
+                            <ul style="margin-left: var(--space-md); margin-top: var(--space-xs);">
+                                <li>完全关闭应用后重新启动</li>
+                                <li>重启您的设备</li>
+                                <li>检查是否有应用更新</li>
+                                <li>如果问题持续，请联系我们的技术支持</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>如何恢复我的数据？</span>
+                            <span>+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>您的数据可能已经自动备份到iCloud。请确保：</p>
+                            <ul style="margin-left: var(--space-md); margin-top: var(--space-xs);">
+                                <li>iCloud同步已开启</li>
+                                <li>使用相同的Apple ID登录</li>
+                                <li>网络连接正常</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>应用支持哪些iOS版本？</span>
+                            <span>+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>我们的应用支持iOS 12.0及以上版本。为了获得最佳体验，建议使用最新的iOS版本。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>如何删除我的账户和数据？</span>
+                            <span>+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>您可以通过以下方式删除账户：</p>
+                            <ul style="margin-left: var(--space-md); margin-top: var(--space-xs);">
+                                <li>在应用内的设置中选择"删除账户"</li>
+                                <li>或发送邮件至 support@example.com 申请删除</li>
+                            </ul>
+                            <p style="margin-top: var(--space-xs);"><strong>注意：此操作不可撤销</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 隐私政策 -->
+        <section id="privacy">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">隐私政策</h2>
+                    <p class="section-subtitle">我们重视并保护您的隐私</p>
+                </div>
+                
+                <div class="card">
+                    <h3>信息收集</h3>
+                    <p style="margin-bottom: var(--space-sm);">
+                        我们仅收集必要的信息以提供更好的服务体验：
+                    </p>
+                    <ul style="margin-left: var(--space-md);">
+                        <li>设备信息（iOS版本、设备型号）</li>
+                        <li>应用使用统计（仅用于改进应用性能）</li>
+                        <li>您主动提供的信息（如反馈内容）</li>
+                    </ul>
+                    
+                    <h3 style="margin-top: var(--space-lg);">信息使用</h3>
+                    <p style="margin-bottom: var(--space-sm);">
+                        我们使用收集的信息用于：
+                    </p>
+                    <ul style="margin-left: var(--space-md);">
+                        <li>提供和改进我们的服务</li>
+                        <li>解决技术问题</li>
+                        <li>发送重要的应用更新通知</li>
+                    </ul>
+                    
+                    <h3 style="margin-top: var(--space-lg);">信息保护</h3>
+                    <p>
+                        我们采用业界标准的安全措施保护您的信息，不会将您的个人信息出售、交易或转让给第三方。
+                    </p>
+                    
+                    <p style="margin-top: var(--space-lg); font-size: var(--font-size-sm); color: var(--text-secondary);">
+                        最后更新：2024年8月31日
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 使用条款 -->
+        <section id="terms">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">使用条款</h2>
+                    <p class="section-subtitle">使用我们的应用即表示您同意以下条款</p>
+                </div>
+                
+                <div class="card">
+                    <h3>服务条款</h3>
+                    <p style="margin-bottom: var(--space-sm);">
+                        通过下载、安装或使用本应用，您同意遵守以下条款：
+                    </p>
+                    <ul style="margin-left: var(--space-md);">
+                        <li>您必须年满13岁才能使用本应用</li>
+                        <li>不得将应用用于非法或未经授权的目的</li>
+                        <li>不得干扰或破坏应用的安全功能</li>
+                        <li>不得逆向工程、反编译或反汇编应用</li>
+                    </ul>
+                    
+                    <h3 style="margin-top: var(--space-lg);">知识产权</h3>
+                    <p>
+                        本应用及其内容受知识产权法保护。所有权利归开发者所有。
+                    </p>
+                    
+                    <h3 style="margin-top: var(--space-lg);">免责声明</h3>
+                    <p>
+                        本应用按"现状"提供，不提供任何明示或暗示的保证。开发者不对因使用应用而产生的任何损失承担责任。
+                    </p>
+                    
+                    <p style="margin-top: var(--space-lg); font-size: var(--font-size-sm); color: var(--text-secondary);">
+                        最后更新：2024年8月31日
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 联系我们 -->
+        <section id="contact">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">联系我们</h2>
+                    <p class="section-subtitle">有问题或建议？我们很乐意听取您的反馈</p>
+                </div>
+                
+                <div class="contact-form">
+                    <form action="#" method="post" onsubmit="handleSubmit(event)">
+                        <div class="form-group">
+                            <label for="name" class="form-label">姓名 *</label>
+                            <input type="text" id="name" name="name" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="form-label">邮箱 *</label>
+                            <input type="email" id="email" name="email" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject" class="form-label">主题 *</label>
+                            <input type="text" id="subject" name="subject" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message" class="form-label">消息 *</label>
+                            <textarea id="message" name="message" class="form-input" required 
+                                placeholder="请描述您的问题或建议..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn" style="width: 100%;">发送消息</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>我们是一支专注于创建高质量iOS应用的团队，致力于为用户提供卓越的移动体验。</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <p><a href="#app-info">应用介绍</a></p>
+                    <p><a href="#support">技术支持</a></p>
+                    <p><a href="#faq">常见问题</a></p>
+                    <p><a href="#privacy">隐私政策</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系信息</h3>
+                    <p>邮箱：support@example.com</p>
+                    <p>技术支持时间：周一至周五 9:00-18:00</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 我的iOS应用. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // FAQ切换功能
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const answer = faqItem.querySelector('.faq-answer');
+            const icon = element.querySelector('span:last-child');
+            
+            faqItem.classList.toggle('active');
+            
+            if (faqItem.classList.contains('active')) {
+                answer.style.display = 'block';
+                icon.textContent = '−';
+            } else {
+                answer.style.display = 'none';
+                icon.textContent = '+';
+            }
+        }
+        
+        // 表单提交处理
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            // 获取表单数据
+            const formData = new FormData(event.target);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+            
+            // 简单的验证
+            if (!name || !email || !subject || !message) {
+                alert('请填写所有必填字段');
+                return;
+            }
+            
+            // 邮箱格式验证
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('请输入有效的邮箱地址');
+                return;
+            }
+            
+            // 模拟发送邮件（实际项目中需要后端处理）
+            alert('感谢您的反馈！我们会尽快回复您的邮件。');
+            event.target.reset();
+        }
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // 页面加载动画
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('section');
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('fade-in');
+                }, index * 100);
+            });
+        });
+        
+        // 结构化数据
+        const structuredData = {
+            "@context": "https://schema.org",
+            "@type": "SupportPage",
+            "name": "我的iOS应用技术支持",
+            "description": "iOS应用的技术支持页面，提供帮助、FAQ和联系方式",
+            "url": window.location.href,
+            "provider": {
+                "@type": "Organization",
+                "name": "我的iOS应用开发团队"
+            }
+        };
+        
+        // 添加结构化数据到页面
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.textContent = JSON.stringify(structuredData);
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>
